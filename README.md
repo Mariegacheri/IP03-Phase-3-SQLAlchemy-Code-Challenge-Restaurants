@@ -39,7 +39,7 @@ Contributions are welcome! If you find issues or have improvements, feel free to
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Author 
+## Author 
 Mwangi Mary,
 
 
