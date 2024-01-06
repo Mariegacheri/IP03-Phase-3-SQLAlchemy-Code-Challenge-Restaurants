@@ -3,11 +3,11 @@ from models import Customer, Restaurant, Review
 
 def seed_data(session):
     # Creating some sample data
-    customer1 = Customer(first_name='Elvin', last_name='Kamau')
-    customer2 = Customer(first_name='Ryan', last_name='Kuria')
+    customer1 = Customer(first_name='Tyler', last_name='Smart')
+    customer2 = Customer(first_name='Cte', last_name='Waina')
 
-    restaurant1 = Restaurant(name='Mama Nilishe', price=3)
-    restaurant2 = Restaurant(name='Shawarma Street', price=2)
+    restaurant1 = Restaurant(name='Steakhouse', price=3)
+    restaurant2 = Restaurant(name='Tatu Restuarant', price=2)
 
     review1 = Review(restaurant=restaurant1, customer=customer1, star_rating=4)
     review2 = Review(restaurant=restaurant1, customer=customer2, star_rating=5)
