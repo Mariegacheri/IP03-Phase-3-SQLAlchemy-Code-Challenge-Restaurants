@@ -1,20 +1,29 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from alembic import command
-from alembic.config import Config
-from models import Base
+# Example migration file content
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
-# Database URL
-DATABASE_URL = 'sqlite:///Restuarants.db'  
+Base = declarative_base()
 
-# Creating the database engine
-engine = create_engine(DATABASE_URL, echo=True)
+class Review(Base):
+    __tablename__ = 'reviews'
+    id = Column(Integer, primary_key=True)
+    star_rating = Column(Integer)
+    restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
+    customer_id = Column(Integer, ForeignKey('customers.id'))
 
-# Creating Alembic configuration
-alembic_cfg = Config("alembic.ini")
-alembic_cfg.set_main_option('script_location', 'alembic')
+class Restaurant(Base):
+    __tablename__ = 'restaurants'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    price = Column(Integer)
+    reviews = relationship('Review', back_populates='restaurant')
 
-# Running the migration
-command.upgrade(alembic_cfg, "head")
+class Customer(Base):
+    __tablename__ = 'customers'
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    reviews = relationship('Review', back_populates='customer')
 
-print("Migration completed.")
+# Add this to your existing models and run the migration
