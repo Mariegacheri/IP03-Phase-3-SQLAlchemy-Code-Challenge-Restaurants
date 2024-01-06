@@ -1,31 +1,20 @@
-from sqlalchemy.orm import sessionmaker
-from models import Customer, Restaurant, Review
+# seeds.py
+from models import Restaurant, Customer, Review, db
 
-def seed_data(session):
-    # Creating some sample data
-    customer1 = Customer(first_name='Tyler', last_name='Smart')
-    customer2 = Customer(first_name='Cte', last_name='Waina')
+# Create sample data
+sample_restaurant1 = Restaurant(name="SteakHouse", price=3)
+sample_restaurant2 = Restaurant(name="  Tatu Restaurant", price=2)
 
-    restaurant1 = Restaurant(name='Steakhouse', price=3)
-    restaurant2 = Restaurant(name='Tatu Restuarant', price=2)
+sample_customer1 = Customer(first_name="Kylan", last_name="Gatia")
+sample_customer2 = Customer(first_name="Cate", last_name="Fatma")
 
-    review1 = Review(restaurant=restaurant1, customer=customer1, star_rating=4)
-    review2 = Review(restaurant=restaurant1, customer=customer2, star_rating=5)
-    review3 = Review(restaurant=restaurant2, customer=customer1, star_rating=3)
+db.session.add_all([sample_restaurant1, sample_restaurant2, sample_customer1, sample_customer2])
+db.session.commit()
 
-    # Add data to the session and commit
-    session.add_all([customer1, customer2, restaurant1, restaurant2, review1, review2, review3])
-    session.commit()
+# Add reviews
+review1 = Review(restaurant=sample_restaurant1, customer=sample_customer1, star_rating=4)
+review2 = Review(restaurant=sample_restaurant2, customer=sample_customer1, star_rating=5)
+review3 = Review(restaurant=sample_restaurant1, customer=sample_customer2, star_rating=3)
 
-    print("Sample data added to the database.")
-
-# Database URL
-DATABASE_URL = 'sqlite:///Restuarants.db' 
-
-# Creating the database engine
-engine = create_engine(DATABASE_URL, echo=True)
-Session = sessionmaker(bind=engine)
-session = Session()
-
-# Seeding the database with sample data
-seed_data(session)
+db.session.add_all([review1, review2, review3])
+db.session.commit()
